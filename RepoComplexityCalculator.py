@@ -1,6 +1,8 @@
 from flask import Flask
 from git import Repo
 from flask import request
+import shutil
+import os
 
 app = Flask(__name__)
 
@@ -12,6 +14,8 @@ def calc_complexity():
     print name
     path = "/repos/" + name
     Repo.clone_from(url, path)
+    if os.path.isdir(path + "/.git"):
+        shutil.rmtree(path + "/.git")
     return "success"
 
 
