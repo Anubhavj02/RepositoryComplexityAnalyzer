@@ -5,8 +5,11 @@ import shutil
 import os
 import subprocess
 import time
+from dask.distributed import Client
+
 
 app = Flask(__name__)
+client = Client('127.0.0.1:8786')
 
 
 def create_file_list(file_list, dir, filenames):
@@ -16,9 +19,10 @@ def create_file_list(file_list, dir, filenames):
 
 
 def complexity_analyzer(path):
-    raw_complexity = subprocess.Popen(["radon raw " + path + " -s -j"], stdout=subprocess.PIPE, shell=True,
+    print path
+    raw_complexity = subprocess.Popen(["radon raw \"" + path + "\" -s -j"], stdout=subprocess.PIPE, shell=True,
                                       executable='/bin/bash')
-    cyclomatic_complexity = subprocess.Popen(["radon cc " + path + " -s -j"], stdout=subprocess.PIPE, shell=True,
+    cyclomatic_complexity = subprocess.Popen(["radon cc \"" + path + "\" -s -j"], stdout=subprocess.PIPE, shell=True,
                                              executable='/bin/bash')
     (raw_complexity_output, err) = raw_complexity.communicate()
     (cyclomatic_complexity, err1) = cyclomatic_complexity.communicate()
@@ -29,6 +33,13 @@ def complexity_without_distributed(file_list):
     start_time = time.time()
     for path in file_list:
         complexity_analyzer(path)
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+
+def complexity_with_distributed(file_list):
+    start_time = time.time()
+    A = client.map(complexity_analyzer, file_list)
+    print client.gather(A)
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
@@ -46,7 +57,13 @@ def calc_complexity():
     if os.path.isdir(path):
         os.path.walk(path, create_file_list, file_list)
 
-    complexity_without_distributed(file_list)
+    print len(file_list)
+    #complexity_without_distributed(file_list)
+    complexity_with_distributed(file_list)
+
+    if os.path.isdir(path):
+        shutil.rmtree(path)
+
     return "success"
 
 
