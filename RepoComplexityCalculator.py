@@ -4,6 +4,7 @@ from flask import request
 import shutil
 import os
 import subprocess
+import time
 
 app = Flask(__name__)
 
@@ -24,6 +25,13 @@ def complexity_analyzer(path):
     return raw_complexity_output + cyclomatic_complexity
 
 
+def complexity_without_distributed(file_list):
+    start_time = time.time()
+    for path in file_list:
+        complexity_analyzer(path)
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+
 @app.route('/calculateComplexity')
 def calc_complexity():
     file_list = []
@@ -38,9 +46,7 @@ def calc_complexity():
     if os.path.isdir(path):
         os.path.walk(path, create_file_list, file_list)
 
-    for path in file_list:
-        print complexity_analyzer(path)
-
+    complexity_without_distributed(file_list)
     return "success"
 
 
