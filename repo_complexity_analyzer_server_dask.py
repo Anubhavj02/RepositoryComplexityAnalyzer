@@ -61,13 +61,13 @@ def calc_complexity_non_distributed():
     """Rest service function to calculate complexity of a Git Repo using traditional for loop
     """
     file_list, path = repo_complexity_analyzer.clone_clean_gitrepo()
-    complexity_without_distributed(file_list)
+    output = complexity_without_distributed(file_list)
 
     # Remove the git cloned folder after use
     if os.path.isdir(path):
         shutil.rmtree(path)
 
-    return "success"
+    return output
 
 
 if __name__ == '__main__':

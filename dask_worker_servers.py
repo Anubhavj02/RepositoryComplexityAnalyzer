@@ -14,7 +14,7 @@ def create_worker(num_worker, server_ip, server_port):
             server_ip: dask scheduler IP
             server_port: dask port
     """
-    for i in range(num_worker):
+    for i in range(int(num_worker)):
         print "-- worker initializing --"
         dask_server = Worker('tcp://'+server_ip+":"+str(server_port), loop=loop)
         dask_server.start()
