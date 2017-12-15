@@ -1,4 +1,6 @@
 import json
+
+import lizard
 from git import Repo  # Package for GIT operations
 from flask import request
 import os
@@ -38,6 +40,17 @@ def complexity_analyzer(path):
 
     # Join both results
     return json.loads(cyclomatic_complexity)
+
+
+def complexity_analyzer_average(path):
+    """function to get complexity and raw data analysis of the file/files mentioned in the path
+                Args:
+                    path: path of the file/ files whose complexity is to be analyzed
+    """
+
+    radon_complexity_value = lizard.analyze_file(path)
+
+    return radon_complexity_value.average_cyclomatic_complexity
 
 
 def clone_clean_gitrepo(gitUrl=None):
