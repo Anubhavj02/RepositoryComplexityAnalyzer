@@ -11,9 +11,6 @@ import repo_complexity_analyzer
 
 app = Flask(__name__)
 
-# Dask Client Master Server
-dask_master_server = Client('127.0.0.1:8786')
-
 
 def complexity_without_distributed(file_list):
     """function to compute complexity of the list of files in non-distributed tradition looping way
@@ -89,7 +86,24 @@ if __name__ == '__main__':
         help='port of the server'
     )
 
+    args_parser.add_argument(
+        '--dask_ip',
+        type=str,
+        default='127.0.0.1',
+        help='port of the server'
+    )
+
+    args_parser.add_argument(
+        '--dask_port',
+        type=int,
+        default=8786,
+        help='port of the server'
+    )
+
     ARGS, unparsed = args_parser.parse_known_args()
+
+    # Dask Client Master Server
+    dask_master_server = Client(ARGS.dask_ip+':'+str(ARGS.dask_port))
 
     # run the server
     app.run(port=ARGS.server_port, host=ARGS.server_host)
