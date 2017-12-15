@@ -26,6 +26,7 @@ def perform_worker_task():
             # Check if the work is done
             if file_path == 'Done':
                 print("-- Work Completed --")
+                break
             else:
                 # Sending the file path for complexity analysis
                 avg_complexity_radon = repo_complexity_analyzer.complexity_analyzer_average(file_path)
