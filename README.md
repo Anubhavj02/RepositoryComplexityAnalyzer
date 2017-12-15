@@ -174,4 +174,6 @@ Process finished with exit code 0
 
 # Evaluation of results
 ## Dask Time vs Number of workers graph
+![alt text](https://github.com/Anubhavj02/RepositoryComplexityAnalyzer/blob/master/graphs/Dask_Time.jpeg "Logo Title Text 1")
 ## Master Slave Time vs Number of workers graph
+![alt text](https://github.com/Anubhavj02/RepositoryComplexityAnalyzer/blob/master/graphs/Master_time.png "Logo Title Text 1")
