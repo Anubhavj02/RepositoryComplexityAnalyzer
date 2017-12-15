@@ -13,6 +13,7 @@ This chat server can support multiple clients where clients can join chat rooms,
 * Dask 0.16.0 - Python Distributed and Parallel computing package
 * Lizard 1.13.0 - Python package to calculate the cyclomatic complexity
 * Radon 2.1.1
+* Pythongit
 
 ## Code Complexity Methodology
 * **Using dask distributed python package:** Here dask package is used to handle the master-worker architecture and radon is used raw and complexity metrics calculation, a JSON file is received at the end with all the metrics.
@@ -22,7 +23,7 @@ This chat server can support multiple clients where clients can join chat rooms,
 ## Starting the servers and running the code
 1. **Running the dask master and worker server**
 ```
-sh dask_start.sh {dask_server_ip} {dask_server_port} {dask_number_of_worker}
+sh dask_startup_files/dask_start.sh {dask_server_ip} {dask_server_port} {dask_number_of_worker}
 ```
 * dask_server_ip: IP of the sever on which dask will run
 * dask_server_port: port of the dask server
@@ -31,7 +32,7 @@ sh dask_start.sh {dask_server_ip} {dask_server_port} {dask_number_of_worker}
 or you can run directly with default dask arguments
 
 ```
-python dask_master_server.py
+python dask_startup_files/dask_master_server.py
 ```
 **Default values are:**
 * IP (localhost): 127.0.0.1
