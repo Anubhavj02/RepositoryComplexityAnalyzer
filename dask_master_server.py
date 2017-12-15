@@ -7,6 +7,13 @@ import dask_worker_servers # Dask work file
 args_parser = argparse.ArgumentParser()
 
 args_parser.add_argument(
+    '--dask_ip',
+    type=str,
+    default="127.0.0.1",
+    help='port of the dask server'
+)
+
+args_parser.add_argument(
     '--dask_port',
     type=str,
     default="8786",
@@ -28,7 +35,7 @@ t.start()
 
 # Start the dask scheduler/master on the port
 s = Scheduler(loop=loop)
-s.start('tcp://:'+str(ARGS.dask_port))
+s.start('tcp://'+str(ARGS.dask_ip)+':'+str(ARGS.dask_port))
 
 # Initialize the dask workers
-dask_worker_servers.create_worker(ARGS.num_worker)
+dask_worker_servers.create_worker(ARGS.num_worker, ARGS.dask_ip, ARGS.dask_port)
