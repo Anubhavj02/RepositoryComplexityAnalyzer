@@ -173,6 +173,7 @@ Process finished with exit code 0
 ```
 
 # Evaluation of results
+As seen execution time decrease with number of workers
 ## Dask Time vs Number of workers graph
 ![alt text](https://github.com/Anubhavj02/RepositoryComplexityAnalyzer/blob/master/graphs/Dask_Time.jpeg "Logo Title Text 1")
 ## Master Slave Time vs Number of workers graph
