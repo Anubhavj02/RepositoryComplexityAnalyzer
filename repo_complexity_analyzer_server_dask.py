@@ -1,3 +1,5 @@
+import argparse
+
 from flask import Flask  # To implement rest service
 import shutil  # Package for operation files and directories
 import os
@@ -72,5 +74,22 @@ def calc_complexity_non_distributed():
 
 
 if __name__ == '__main__':
-    # get the repository and get the commit details. save in a dictionary object
-    app.run(port =8080)
+
+    args_parser = argparse.ArgumentParser()
+    args_parser.add_argument(
+        '--server_host',
+        type=str,
+        default='127.0.0.1',
+        help='IP of server where it is hosted'
+    )
+    args_parser.add_argument(
+        '--server_port',
+        type=int,
+        default=8000,
+        help='port of the server'
+    )
+
+    ARGS, unparsed = args_parser.parse_known_args()
+
+    # run the server
+    app.run(port=ARGS.server_port, host=ARGS.server_host)
